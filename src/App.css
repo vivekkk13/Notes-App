@@ -45,8 +45,8 @@ textarea:focus {
 
   font-size: 20px;
 }
-.note-delete {
-  font-size: 25px;
+.delete {
+  font-size: 24px;
 }
 .note-list {
   display: grid;
@@ -81,8 +81,11 @@ input {
   background: #ffffff00;
   border: 0px;
 }
-input:focus {
+/* input:focus {
   outline: none;
+} */
+#icon {
+  font-size: 24px;
 }
 #icon:focus .note {
   background-color: red !important;

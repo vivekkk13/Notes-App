@@ -15,19 +15,22 @@ export const AddList = () => {
   const setDetail = (e) => {
     setaddNote(e.target.value);
   };
-  console.log(editText, "dsfh");
-  const updateData = () => {
-    const newList = [...notes];
-    const userIndex = notes.findIndex((item) => item.id == ide);
-    newList[userIndex] = {
-      text: addNote,
-      date: date.toLocaleDateString(),
-    };
-    setNotes(newList);
-    setEdit(false);
-    setaddNote("");
-  };
-  const handleSubmit = (e) => {
+  // const updateData = () => {
+  //   const newList = [...notes];
+  //   const userIndex = newList.findIndex((item) => item.id == ide);
+
+  //   newList[userIndex] = {
+  //     text: addNote,
+  //     date: date.toLocaleDateString(),
+  //   };
+  //   console.log(newList);
+
+  //   setNotes(newList);
+  //   setEdit(false);
+  //   setaddNote("");
+  // };
+
+  const handleSubmit = () => {
     setNotes((prev) => [
       ...prev,
       {
@@ -44,24 +47,14 @@ export const AddList = () => {
         <textarea
           rows="8"
           value={addNote}
+          onChange={setDetail}
           cols="10"
           placeholder="type to  add Note...."
-          onChange={setDetail}
         ></textarea>
         <div className="note-footer">
           <small>{charcterLimit - addNote.length} remaining</small>
-          <button
-            className="save"
-            onClick={() => {
-              handleSubmit();
-              if (edit) {
-                updateData();
-              } else {
-                handleSubmit();
-              }
-            }}
-          >
-            {edit ? "edit" : "save"}
+          <button className="save" onClick={handleSubmit}>
+            save
           </button>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NotesContext } from "./allNotes";
 
 import swal from "sweetalert";
@@ -6,12 +6,14 @@ import { AddList } from "./AddList";
 
 export const Notes = ({ id, text, date }) => {
   const [addNote, setaddNote] = useState("");
-  const { name, color, editMode, edittext, ids } = useContext(NotesContext);
+  const { name, color, editMode, edittext, ids, editData } =
+    useContext(NotesContext);
+  const [showEditData, setShowEditData] = editData;
   const [notes, setNotes] = name;
   const [darkMode, setDrakMode] = color;
-  // const [edit, setEdit] = editMode;
+  const [edit, setEdit] = editMode;
   const [value, setValue] = useState(text);
-  const [editText, setEditText] = edittext;
+  const [editText, setEditText] = useState(showEditData.editText);
   const [ide, setId] = ids;
   const handleDelete = (id) => {
     swal({
@@ -33,56 +35,79 @@ export const Notes = ({ id, text, date }) => {
       }
     });
   };
-  // const setDetail = () => {
-  //   console.log("hellooo");
-  //   // setaddNote(e.target.value);
-  // };
-  console.log(addNote, "dsfh");
 
-  const handleEdit = (text) => {
-    setEditText(text);
-    console.log("edit==>", editText);
-  };
-  // const updateData = (e) => {
-  //   const newList = [...notes];
-  //   const userIndex = notes.findIndex((item) => item.id == ide);
-  //   newList[userIndex] = {
-  //     text: addNote,
-  //     date: date,
-  //   };
-  //   setEditText(e.target.value);
-  //   setNotes(newList);
-  // };
-  const handleValue = (e) => {
-    setValue(e.target.value);
-  };
+  useEffect(() => {
+    setValue(text);
+  }, [text]);
 
   return (
     <>
       <div className="note">
-        <input onChange={handleValue} value={value} />
+        {showEditData.showEditor && showEditData.showEditor == id ? (
+          <textarea
+            rows="8"
+            value={editText}
+            onChange={(e) => setEditText(e.target.value)}
+            cols="10"
+            placeholder="type to  add Note...."
+          />
+        ) : (
+          <span>{value}</span>
+        )}
+
         <div className="note-footer">
           <small>{date}</small>
-          <span className="note-delete">
-            <i
-              className="fa fa-trash delete"
-              aria-hidden="true"
-              onClick={() => {
-                handleDelete(id);
-              }}
-            ></i>
-            <span className="edit">
+          <div>
+            <span className="note-delete">
               <i
-                id="icon"
-                className="fa fa-pencil-square-o "
+                className="fa fa-trash delete"
                 aria-hidden="true"
                 onClick={() => {
-                  handleEdit(text);
-                  setId(id);
+                  handleDelete(id);
                 }}
               ></i>
             </span>
-          </span>
+            {showEditData.showEditor && showEditData.showEditor == id ? (
+              <button
+                className="save"
+                onClick={() => {
+                  setNotes(
+                    notes.map((item, index) => {
+                      if (item.id == showEditData.showEditor) {
+                        return {
+                          ...notes[index],
+                          text: editText,
+                        };
+                      } else {
+                        return item;
+                      }
+                    })
+                  );
+                  setShowEditData({
+                    showEditor: null,
+                    editText: "",
+                  });
+                }}
+              >
+                edit
+              </button>
+            ) : (
+              <span className="edit">
+                <i
+                  id="icon"
+                  className="fa fa-pencil-square-o "
+                  aria-hidden="true"
+                  onClick={() => {
+                    setShowEditData({
+                      showEditor: id,
+                      editText: value,
+                    });
+                    setEditText(value);
+                  }}
+                ></i>
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </>

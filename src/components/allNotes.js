@@ -25,6 +25,10 @@ export const AllNotes = (props) => {
   const [edit, setEdit] = useState(false);
   const [editText, setEditText] = useState("");
   const [ide, setId] = useState("");
+  const [showEditData, setShowEditData] = useState({
+    showEditor: null,
+    editText: "",
+  });
   return (
     <>
       <div className={`${darkMode && "dark-mode"}`}>
@@ -35,6 +39,7 @@ export const AllNotes = (props) => {
             editMode: [edit, setEdit],
             edittext: [editText, setEditText],
             ids: [ide, setId],
+            editData: [showEditData, setShowEditData],
           }}
         >
           {props.children}
