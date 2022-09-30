@@ -23,7 +23,6 @@ export const NotesList = () => {
           <Notes key={i} id={list.id} text={list.text} date={list.date} />
         ))}
         <AddList />
-        {/* <Edit /> */}
       </div>
     </>
   );

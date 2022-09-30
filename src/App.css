@@ -27,6 +27,7 @@ textarea {
 textarea:focus {
   outline: none;
 }
+
 .save {
   background-color: #6a6a6a;
   border-radius: 6px;
@@ -47,6 +48,8 @@ textarea:focus {
 }
 .delete {
   font-size: 24px;
+
+  margin-left: 123px;
 }
 .note-list {
   display: grid;
@@ -89,4 +92,16 @@ input {
 }
 #icon:focus .note {
   background-color: red !important;
+}
+.before {
+  margin-top: -26px;
+}
+.editt {
+  margin-left: 208px;
+}
+.jodit-status-bar {
+  display: none !important;
+}
+.jodit-container {
+  border: none !important;
 }
